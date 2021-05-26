@@ -1,6 +1,6 @@
 from vncorenlp import VnCoreNLP
 
-text = "Xe buýt nào đến thành phố Huế lúc 20 giờ ?"
+text = "Xe buýt nào đến thành phố Hồ Chí Minh?"
 pathToJar = "/Users/thanhson/Documents/Course/Term202/Natural language processing/Assignment/VnCoreNLP-1.1.1.jar"
 
 text = text.lower()
@@ -51,6 +51,7 @@ class Transition:
         w_i = conf.stack.pop()
 
         conf.arcs.append(Relation(w_j, relation, w_i))
+        print("Left arc " + relation, conf.stack, conf.buffer, [str(arc) for arc in conf.arcs])
 
     @staticmethod
     def right_arc_star(conf, relation):
@@ -63,7 +64,9 @@ class Transition:
         w_i = conf.stack[-1]
 
         conf.buffer = conf.buffer[1:]
-        conf.arcs.append(Relation(w_j, relation, w_i))
+        conf.arcs.append(Relation(w_i, relation, w_j))
+        print("Right arc star " + relation, conf.stack, conf.buffer, [str(arc) for arc in conf.arcs])
+
 
     @staticmethod
     def right_arc(conf, relation):
@@ -80,6 +83,7 @@ class Transition:
         conf.stack.append(w_j)
         conf.buffer = conf.buffer[1:]
         conf.arcs.append(Relation(w_i, relation, w_j))
+        print("Right arc " + relation, conf.stack, conf.buffer, [str(arc) for arc in conf.arcs])
 
     @staticmethod
     def shift(conf):
@@ -90,6 +94,7 @@ class Transition:
 
         conf.stack.append(conf.buffer[0])
         conf.buffer = conf.buffer[1:]
+        print("Shift ", conf.stack, conf.buffer, [str(arc) for arc in conf.arcs])
 
     @staticmethod
     def reduce(conf):
@@ -102,6 +107,7 @@ class Transition:
         if conf.stack[-1] not in [ele.right for ele in conf.arcs]:
             return -1
         conf.stack.pop()
+        print("Reduce ", conf.stack, conf.buffer, [str(arc) for arc in conf.arcs])
 
 print(word_segmented_text)
 # To do
@@ -123,8 +129,6 @@ def parsing():
     while 1:
         if len(sentence_conf.buffer) == 0:
             for arc in sentence_conf.arcs:
-                print(sentence_conf.stack)
-                print(sentence_conf.buffer)
                 print(arc)
             return sentence_conf
         # As of now, i should only consider on tail and head of these instance
@@ -135,43 +139,57 @@ def parsing():
         left_rel = None
         for relation in relations_set:
             if Relation(w_i, "", w_j) == relation:
-                print("Found right")
+                # print("Found right")
                 right_rel = relation
-                print(right_rel)
+                # print(right_rel)
                 break
             elif Relation(w_j, "", w_i) == relation:
-                print("Found left")
+                # print("Found left")
                 left_rel = relation
-                print(left_rel)
+                # print(left_rel)
                 break
         # If there is no relation between tail and head, the buffer still have elements, shift
         if right_rel is None and left_rel is None:
-            #We should check if w_j have some relation ship with some elements in stack, going down from tail
-
-            print("sh")
-            Transition.shift(sentence_conf)
-            print(sentence_conf.stack)
-            print(sentence_conf.buffer)
+            #We should check if w_j have some relation ship with some elements in stack, going down from tail, not including root
+            have_hidden_arc = False
+            for word in reversed(sentence_conf.stack[:-1]):
+                for relation in relations_set:
+                    if Relation(word, "", w_j) == relation:
+                        # print("Have hidden arc")
+                        have_hidden_arc = True
+                        break
+                    elif Relation(w_j, "", word) == relation:
+                        # print("Have hidden arc")
+                        have_hidden_arc = True
+                        break
+            if have_hidden_arc:
+                # print("re")
+                Transition.reduce(sentence_conf)
+            else:
+                # print("sh")
+                Transition.shift(sentence_conf)
+            # print(sentence_conf.stack)
+            # print(sentence_conf.buffer)
         # If there is a relation between head and tail
         if right_rel is not None:
-            print("ri")
+            # print("ri")
             # This part is to solve n - n modifier in Vietnamese
             if right_rel.relation_name == "nmod":
                 Transition.right_arc_star(sentence_conf, right_rel.relation_name)
             else:
                 Transition.right_arc(sentence_conf, right_rel.relation_name)
-            print(sentence_conf.stack)
-            print(sentence_conf.buffer)
-        if left_rel is not None:
-            print("le")
+            # print(sentence_conf.stack)
+            # print(sentence_conf.buffer)
+        elif left_rel is not None:
+            # print("le")
             Transition.left_arc(sentence_conf, left_rel.relation_name)
-            print(sentence_conf.stack)
-            print(sentence_conf.buffer)
+            # print(sentence_conf.stack)
+            # print(sentence_conf.buffer)
         # If there are elements on stack but none in buffer, reduce
-        if len(sentence_conf.stack) > 1 and len(sentence_conf.buffer) == 0:
-            print("re")
-            Transition.reduce(sentence_conf)
-            print(sentence_conf.stack)
-            print(sentence_conf.buffer)
+        # if len(sentence_conf.stack) > 1 and len(sentence_conf.buffer) == 0:
+        #     print("re")
+        #     Transition.reduce(sentence_conf)
+        #     print(sentence_conf.stack)
+        #     print(sentence_conf.buffer)
 
 parsing()
