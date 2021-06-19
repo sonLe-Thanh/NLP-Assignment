@@ -1,0 +1,2 @@
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:30), nmod(8:30->hr), pobj(đi->đến), dobj(đến->hồ_chí_minh), prep(đến->lúc), tmod(lúc->18:30), nmod(18:30->hr), punc(đi->?)
+

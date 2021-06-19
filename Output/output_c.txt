@@ -1,0 +1,6 @@
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [N đà_nẵng, P lúc [N 8:30 [N hr]]]]
+[P đến [N hồ_chí_minh, P lúc [N 18:30 [N hr]]]]
+]
