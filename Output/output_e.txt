@@ -1,0 +1,4 @@
+PRINT-ALL
+?tr (TRAIN ?tr) 
+ (DTIME ?tr DANANG 8:30HR)
+ (ATIME ?tr HCMC 18:30HR)
