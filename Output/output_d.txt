@@ -30,5 +30,10 @@
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b2">>', 'SOURCE': '<CITY t1<WH t1 NAME>><CITY t1<WH t1 NAME>>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'ARRIVE': '<TIME t1 <WH t1 TIME>>'}}}
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b4">>', 'LEAVE': '<TIME t1 <WH t1 TIME>>'}}}
-{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'LEAVE': '<TIME t1 <WH t1 TIME>>', 'ARRIVE': '<TIME t1 <WH t1 TIME>><TIME t1 <WH t1 TIME>>'}}}
-{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'LEAVE': '<TIME t1 <WH t1 TIME>>', 'DESTINATION': '<CITY t1<NAME t1 hồ_chí_minh>>', 'ARRIVE': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'LEAVE': '<TIME t1 <WH t1 TIME>>', 'ARRIVE': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'SOURCE': '<CITY t1<NAME t1 hồ_chí_minh>>', 'LEAVE': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'SOURCE': '<CITY t1<NAME t1 đà_nẵng>>', 'LEAVE': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b6">>', 'LEAVE': '<TIME t1 <WH t1 TIME>>', 'DESTINATION': '<CITY t1<NAME t1 huế>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b1">>', 'RUN-TIME': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'SOURCE': '<CITY t1<NAME t1 đà_nẵng>>', 'RUN-TIME': '<TIME t1 <WH t1 TIME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'SOURCE': '<CITY t1<NAME t1 đà_nẵng>>', 'DESTINATION': '<CITY t1<NAME t1 huế>>', 'RUN-TIME': '<TIME t1 <WH t1 TIME>>'}}}

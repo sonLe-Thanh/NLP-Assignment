@@ -181,11 +181,11 @@ class ProcessText:
         word_segmented_text = word_segmented_text[0]
         # Check if given sentences have a real main verb
         # First read the dictionary
-        dictionary_set = {}
-        with open('../Assignment/Models/dictionary.txt', 'r') as file:
-            for line in file:
-                word, type_word = line.split()
-                dictionary_set.setdefault(word, type_word)
+        # dictionary_set = {}
+        # with open('../Assignment/Models/dictionary.txt', 'r') as file:
+        #     for line in file:
+        #         word, type_word = line.split()
+        #         dictionary_set.setdefault(word, type_word)
 
         def isHaveVerb(text_list):
             # Only allow 1 word atm (đi)
@@ -197,7 +197,7 @@ class ProcessText:
         def getFistPrepIdx(text_list):
             # 3 prep
             for i in range(len(text_list)):
-                if text_list[i] in ["đến", "từ", "lúc"]:
+                if text_list[i] in ["đến", "từ", "lúc", "hết"]:
                     return i
             return -1
 
@@ -206,7 +206,7 @@ class ProcessText:
                 idx_to_add = getFistPrepIdx(text_list)
                 text_list.insert(idx_to_add, "đi")
 
-
+        # print(word_segmented_text)
         addRealVerb(word_segmented_text)
         # remove useless "thành phố" verb which may cause trouble parsing
         word_segmented_text = [x for x in word_segmented_text if x != 'thành_phố']
@@ -259,7 +259,7 @@ class ProcessText:
                 if Relation(w_i, "", w_j) == relation:
                     # print("Found right")
                     right_rel = relation
-                    if w_i in city_set or w_i == "lúc" and w_j in ["từ", "đến"]:
+                    if w_i in city_set or w_i in ["lúc","lúc_nào"] and w_j in ["từ", "đến"]:
                         right_rel = None
                     if right_rel is not None:
                         if w_i in ['từ', 'đến']:
@@ -272,7 +272,7 @@ class ProcessText:
                     left_rel = relation
                     # Exclude cases that this somewhat parsing the wrong order
                     # The order is like <from> <at> <to> <at>
-                    if w_i in city_set or w_i == "lúc" and w_j in ["từ", "đến"]:
+                    if w_i in city_set or w_i in ["lúc","lúc_nào"] and w_j in ["từ", "đến"]:
                         left_rel = None
                     if left_rel is not None:
                         if w_j in ['từ', 'đến']:
@@ -374,8 +374,13 @@ class ProcessText:
                     name_child = rel.right + "-to"
                 elif rel.left == "từ":
                     name_child = rel.right + "-from"
+                elif rel.left == "hết":
+                    name_child = rel.right
                 parent_node = Token(name_parent, "V")
-                child_node = Token(name_child, "P")
+                if rel.left == "hết":
+                    child_node = Token(name_child, "N")
+                else:
+                    child_node = Token(name_child, "P")
             elif rel.relation_name == "tmod":
                 # get the closest prep, it's before the current relation
                 name_child = rel.right
@@ -383,6 +388,8 @@ class ProcessText:
                     name_parent = rel.left + "-to"
                 elif sentence_conf[idx - 1].left == "từ":
                     name_parent = rel.left + "-from"
+                elif rel.left == "hết":
+                    name_parent = rel.left
                 parent_node = Token(name_parent, "P")
                 child_node = Token(name_child, "N")
             elif rel.relation_name == "pobj":
@@ -398,6 +405,7 @@ class ProcessText:
         # Write these to files
 
         file_grammar_relation = open("../Assignment/Output/output_c.txt", 'a')
+        # print(tree)
         print("S root [", file=file_grammar_relation)
         print("SUBJ [" + str(tree["root"].children[0].children[0]) + "]", file=file_grammar_relation)
         print("[MAIN-" + tree["root"].children[0].type + " " + tree["root"].children[0].word + "]",
@@ -412,7 +420,8 @@ class ProcessText:
     @staticmethod
     def logical_form(grammar_relation):
         # Change to logical form
-        # print(grammar_relation.word)
+        # print("entered")
+        # print(grammar_relation)
         question_type = ["WH-QUERY", "Y/N-QUESTION", "COMMAND"]
         city_set = []
         bus_name = []
@@ -425,7 +434,7 @@ class ProcessText:
         log_form = {}
         log_form.setdefault(question_type[0], {})
         log_form[question_type[0]].setdefault(grammar_relation.word, {})
-        agent = from_loc = to_loc = from_time = to_time = ""
+        agent = from_loc = to_loc = from_time = to_time = take_time = ""
 
         for info in grammar_relation.children:
             if info.word == "xe_buýt":
@@ -471,6 +480,15 @@ class ProcessText:
                                 to_time += "<TIME t1 " + child.children[0].word + ">"
                             elif child.word == "lúc_nào-to":
                                 to_time += "<TIME t1 <WH t1 TIME>>"
+            elif info.word == "hết":
+                if info.children:
+                    for child in info.children:
+                        # This must be a N
+                        if child.word == "bao_lâu":
+                            take_time += "<TIME t1 <WH t1 TIME>>"
+                        else:
+                            take_time += "<TIME t1 "+child.word+">"
+
 
         if agent != "":
             log_form[question_type[0]][grammar_relation.word].setdefault("AGENT", agent)
@@ -482,6 +500,8 @@ class ProcessText:
             log_form[question_type[0]][grammar_relation.word].setdefault("DESTINATION", to_loc)
         if to_time != "":
             log_form[question_type[0]][grammar_relation.word].setdefault("ARRIVE", to_time)
+        if take_time != "":
+            log_form[question_type[0]][grammar_relation.word].setdefault("RUN-TIME", take_time)
 
         file_logical_form = open("../Assignment/Output/output_d.txt", 'a')
         print(log_form, file=file_logical_form)
@@ -501,7 +521,7 @@ class ProcessText:
                 info_dict = logical_form["WH-QUERY"]["đi"]
                 # print(info_dict)
                 # Get as much info as possible:
-                agent_query = source_query = dest_query = leave_query = arrive_query = ""
+                agent_query = source_query = dest_query = leave_query = arrive_query = run_time_query = ""
                 for idx, key in enumerate(info_dict):
                     if key == "AGENT":
                         # agent_query = ""
@@ -551,9 +571,23 @@ class ProcessText:
                         else:
                             leave_time = arrive_info[2].split()[0] + "HR"
                             arrive_query += "(ATIME ?tr ?ap " + leave_time + ")"
+                    elif key == "RUN-TIME":
+                        run_time_info = info_dict[key][1:-1].split()
+                        # print(run_time_info)
+                        if "WH" in run_time_info[2]:
+                            run_time_query += "?rt (RUN-TIME ?tr ?dp ?ap ?rt)"
+                            # print(run_time_query)
+                        else:
+                            run_time = run_time_info[2].split()[0] + "HR"
+                            run_time_query +="(RUN-TIME ?tr ?dp ?ap "+run_time+")"
+                # print(run_time_query)
                 # print(agent_query, source_query, dest_query, leave_query, arrive_query)
                 # Combine the query to get a full query
-                full_source_query = full_leave_query = ""
+                full_source_query = full_leave_query = full_run_query = ""
+                dplace_info = "?dp"
+                dtime_info = "?dt"
+                aplace_info = "?ap"
+                atime_info = "?at"
                 if source_query == "" and leave_query != "":
                     full_source_query = leave_query
                 elif source_query != "" and leave_query == "":
@@ -563,8 +597,6 @@ class ProcessText:
                 else:
                     # Get the ?info data
                     question_mark = []
-                    dplace_info = "?dp"
-                    dtime_info = "?dt"
                     split_source = source_query.split()
                     split_leave = leave_query.split()
                     if "?" in split_source[0]:
@@ -604,8 +636,7 @@ class ProcessText:
                 else:
                     # Get the ?info data
                     question_mark = []
-                    aplace_info = "?ap"
-                    atime_info = "?at"
+
                     split_dest = dest_query.split()
                     split_arrive = arrive_query.split()
                     if "?" in split_dest[0]:
@@ -635,12 +666,40 @@ class ProcessText:
                     if full_leave_query[:-1] != ")": full_leave_query += ")"
                     # print(full_leave_query)
                     # print(split_arrive, split_dest)
+                # Get the ?dp and ?ap of the run_query
+                # print(full_leave_query)
+                # print(full_source_query)
+                if full_source_query != "":
+                    # source_part = full_source_query.split()
+                    # print(source_part)
+                    if "?" in full_source_query.split()[0]:
+                        dplace_info = full_source_query.split()[3]
+                    else:
+                        dplace_info = full_source_query.split()[2]
+                if full_leave_query != "":
+                    if "?" in full_leave_query.split()[0]:
+                        aplace_info = full_leave_query.split()[3]
+                    else:
+                        aplace_info = full_leave_query.split()[2]
+                # print(dplace_info)
+                # print(aplace_info)
+                if dplace_info != "?dp" and aplace_info != "?ap":
+                    full_run_query = run_time_query.replace("?dp", dplace_info).replace("?ap", aplace_info)
+                elif dplace_info == "?dp" and aplace_info != "?ap":
+                    full_run_query = run_time_query.replace("?ap", aplace_info)
+                elif dplace_info != "?dp" and aplace_info == "?ap":
+                    full_run_query = run_time_query.replace("?dp", dplace_info)
+                else:
+                    full_run_query = run_time_query
+                # print(full_run_query)
                 if agent_query != "":
                     procedure_str += agent_query + "\n"
                 if full_source_query != "":
                     procedure_str += full_source_query + "\n"
                 if full_leave_query != "":
                     procedure_str += full_leave_query + "\n"
+                if full_run_query != "":
+                    procedure_str += full_run_query +"\n"
 
                 file_procedure_form = open("../Assignment/Output/output_e.txt", 'a')
                 print(procedure_str, file=file_procedure_form)
@@ -653,6 +712,7 @@ class ProcessText:
         atime_data = []
         dtime_data = []
         rtime_data = []
+        have_dtime = have_atime = have_both_da = False
         with open('../Assignment/Models/data.txt', 'r') as file:
             lines = [line.rstrip() for line in file]
             for line in lines:
@@ -671,8 +731,15 @@ class ProcessText:
         possible_atimes = [item[1:-1].split()[3] for item in atime_data]
         possible_dtimes = [item[1:-1].split()[3] for item in dtime_data]
         possible_time = list(set(possible_atimes) | set(possible_dtimes))
+        possible_run_time = [item[1:-1].split()[4] for item in rtime_data]
+        # print(possible_run_time)
         # print(commands)
         result = []
+        # if commands[:-1] == "": commands = commands[:-1]
+        for cmd in commands:
+            if "DTIME" in cmd: have_dtime = True
+            if "ATIME" in cmd: have_atime = True
+        have_both_da = have_dtime & have_atime
         if commands[0] == "PRINT-ALL":
             # start matching
             var_to_get = []
@@ -683,6 +750,7 @@ class ProcessText:
             gotten_at = []
             result_d = []
             result_a = []
+            result_r = []
             dtime_appear = atime_appear = False
             # print(commands)
             for item in commands[1:]:
@@ -767,13 +835,14 @@ class ProcessText:
                                             if check_cmd in atime_data:
                                                 result_a.append(time_point)
                                     else:
+                                        # print(check_cmd)
                                         if check_cmd in atime_data:
                                             result_a.append(time_point)
                         if question_mark == "?dt":
                             var_to_get.append(question_mark)
                             for time_point in possible_time:
                                 for train_name in gotten_train:
-                                    check_cmd = item[4:].replace("?tr", train_name).replace("?at", time_point).strip()
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?dt", time_point).strip()
                                     have_mark_unused = False
                                     # atime_appear_ap = True
                                     parts_check_cmd = check_cmd[1:-1].split()
@@ -794,6 +863,36 @@ class ProcessText:
                                     else:
                                         if check_cmd in dtime_data:
                                             result_d.append(time_point)
+                        if question_mark == "?rt":
+                            var_to_get.append(question_mark)
+                            for run_time_test in possible_run_time:
+                                for train_name in gotten_train:
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?rt", run_time_test).strip()
+                                    have_mark_unused = False
+                                    list_unused = []
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        # May be ?dp or ?ap -> Place
+                                        if part in ["?ap","?dp"]:
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                list_unused.append(part)
+                                    if have_mark_unused:
+                                        if len(list_unused) == 2:
+                                            for citi1 in possible_city_code:
+                                                for citi2 in possible_city_code:
+                                                    check_cmd = item[4:].replace("?tr", train_name).replace("?rt", run_time_test).replace(list_unused[0], citi1).replace(list_unused[1], citi2).strip()
+                                                    # print(check_cmd)
+                                                    if check_cmd in rtime_data:
+                                                        result_r.append(run_time_test)
+                                        elif len(list_unused) == 1:
+                                            for citi1 in possible_city_code:
+                                                check_cmd = item[4:].replace("?tr", train_name).replace("?rt", run_time_test).replace(list_unused[0], citi1).strip()
+                                            if check_cmd in rtime_data:
+                                                result_r.append(run_time_test)
+                                    else:
+                                        if check_cmd in rtime_data:
+                                            result_r.append(run_time_test)
                     else:
                         # Train name is provided
                         if item.split()[1][:-1] in possible_train_name:
@@ -866,6 +965,7 @@ class ProcessText:
                                             result_a.append(train_name)
             # print(result_a)
             # print(result_d)
+            # print(result_r)
             # Intersection if ?tr is to find
             if "?tr" in var_to_get:
                 if dtime_appear and atime_appear:
@@ -877,7 +977,31 @@ class ProcessText:
             elif "?dp" in var_to_get or "?ap" in var_to_get:
                 result = result_d + result_a
             elif "?dt" in var_to_get or "?at" in var_to_get:
-                result = result_d + result_a
+                if "?dt" in var_to_get:
+                    if "?at" in var_to_get:
+                        result = result_d + result_a
+                    else:
+                        # Check if both of the command appear
+                        if have_both_da:
+                            if result_a:
+                                result = result_d + result_a
+                            else:
+                                result = []
+                        else:
+                            result = result_d
+                elif "?at" in var_to_get:
+                    if "?dt" in var_to_get:
+                        result = result_d + result_a
+                    else:
+                        if have_both_da:
+                            if result_d:
+                                result = result_d + result_a
+                            else:
+                                result = []
+                        else:
+                            result = result_a
+            elif "?rt" in var_to_get:
+                result = result_r
         for idx, item in enumerate(result):
             if item in possible_city_code:
                 result[idx] = city_name_decode(item)
@@ -889,9 +1013,9 @@ class ProcessText:
         # print(rtime_data)
         result_str = ""
         if result:
-            result_str += "Kết quả là " + ",".join(res for res in result)
+            result_str += "Kết quả là " + ",".join(res for res in result) + "."
         else:
-            result_str += "Không có kết quả thoả mãn"
+            result_str += "Không có kết quả thoả mãn."
 
         file_result = open("../Assignment/Output/output_f.txt", 'a')
         print("Q: " + question, file=file_result)

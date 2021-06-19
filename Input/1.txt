@@ -31,4 +31,9 @@ Xe buýt B2 đến đâu từ đâu ?
 Xe buýt B3 đến lúc nào?
 Xe buýt B4 đi từ lúc nào?
 Xe buýt B5 đi từ lúc nào đến lúc nào?
-Xe buýt B5 đi từ lúc nào đến thành phố Hồ Chí Minh?
+Xe buýt B5 đi từ thành phố Hồ Chí Minh lúc nào?
+Xe buýt B5 đi từ thành phố Đà Nẵng lúc nào?
+Xe buýt B6 đi từ lúc nào đến Huế?
+Xe buýt B1 đi hết bao lâu?
+Xe buýt B3 đi từ Đà Nẵng hết bao lâu?
+Xe buýt B3 đi từ Đà Nẵng đến Huế hết bao lâu?

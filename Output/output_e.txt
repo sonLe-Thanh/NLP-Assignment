@@ -139,6 +139,29 @@ PRINT-ALL
 
 PRINT-ALL
 (TRAIN B5) 
+?dt (DTIME ?tr HCMC ?dt)
+
+PRINT-ALL
+(TRAIN B5) 
+?dt (DTIME ?tr DANANG ?dt)
+
+PRINT-ALL
+(TRAIN B6) 
 ?dt (DTIME ?tr ?dp ?dt)
-?at (ATIME ?tr HCMC ?at)
+(ATIME ?tr HUE ?at)
+
+PRINT-ALL
+(TRAIN B1) 
+?rt (RUN-TIME ?tr ?dp ?ap ?rt)
+
+PRINT-ALL
+(TRAIN B3) 
+(DTIME ?tr DANANG ?dt) 
+?rt (RUN-TIME ?tr DANANG ?ap ?rt)
+
+PRINT-ALL
+(TRAIN B3) 
+(DTIME ?tr DANANG ?dt) 
+(ATIME ?tr HUE ?at)
+?rt (RUN-TIME ?tr DANANG HUE ?rt)
 
