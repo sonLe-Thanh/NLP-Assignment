@@ -23,22 +23,22 @@ Q: Xe buýt nào đến thành phố Đà Nẵng?
 A: Không có kết quả thoả mãn
 
 Q: Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR?
-A: Kết quả là B4
+A: Không có kết quả thoả mãn
 
 Q: Xe buýt nào đến lúc 19:00 HR?
 A: Kết quả là B1
 
 Q: Xe buýt nào từ Đà Nẵng lúc 5:30 HR?
-A: Kết quả là B5
+A: Không có kết quả thoả mãn
 
 Q: Xe buýt nào đi từ lúc 5:30 HR?
 A: Kết quả là B5
 
 Q: Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR?
-A: Kết quả là B4
+A: Không có kết quả thoả mãn
 
 Q: Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR từ Đà Nẵng lúc 8:30 HR ?
-A: Kết quả là B4
+A: Không có kết quả thoả mãn
 
 Q: Xe buýt nào đến Huế từ Hà Nội ?
 A: Không có kết quả thoả mãn
@@ -85,6 +85,18 @@ A: Kết quả là Hà Nội
 Q: Xe buýt B1 đi từ đâu đến đâu?
 A: Kết quả là Hồ Chí Minh,Huế
 
-Q: Xe buýt B3 đến đâu từ đâu ?
-A: Kết quả là Đà Nẵng,Huế
+Q: Xe buýt B2 đến đâu từ đâu ?
+A: Kết quả là Hồ Chí Minh,Huế
+
+Q: Xe buýt B3 đến lúc nào?
+A: Kết quả là 20:00HR
+
+Q: Xe buýt B4 đi từ lúc nào?
+A: Kết quả là 8:30HR
+
+Q: Xe buýt B5 đi từ lúc nào đến lúc nào?
+A: Kết quả là 5:30HR,23:30HR
+
+Q: Xe buýt B5 đi từ lúc nào đến thành phố Hồ Chí Minh?
+A: Kết quả là 5:30HR
 

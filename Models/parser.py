@@ -160,6 +160,7 @@ def city_name_encode(city_name):
     elif city_name == "huế":
         return "HUE"
 
+
 def city_name_decode(city_code):
     if city_code == "HCMC":
         return "Hồ Chí Minh"
@@ -187,17 +188,17 @@ class ProcessText:
                 dictionary_set.setdefault(word, type_word)
 
         def isHaveVerb(text_list):
+            # Only allow 1 word atm (đi)
             for check_word in text_list:
-                if check_word in dictionary_set:
-                    if dictionary_set[check_word] == "V":
-                        return True
+                if check_word == "đi":
+                    return True
             return False
 
         def getFistPrepIdx(text_list):
+            # 3 prep
             for i in range(len(text_list)):
-                if text_list[i] in dictionary_set:
-                    if dictionary_set[text_list[i]] == "P":
-                        return i
+                if text_list[i] in ["đến", "từ", "lúc"]:
+                    return i
             return -1
 
         def addRealVerb(text_list):
@@ -205,9 +206,11 @@ class ProcessText:
                 idx_to_add = getFistPrepIdx(text_list)
                 text_list.insert(idx_to_add, "đi")
 
+
         addRealVerb(word_segmented_text)
         # remove useless "thành phố" verb which may cause trouble parsing
         word_segmented_text = [x for x in word_segmented_text if x != 'thành_phố']
+        print("Xử lý câu tương tự để có kết quả: " + " ".join(word for word in word_segmented_text))
         return word_segmented_text
 
     @staticmethod
@@ -449,6 +452,8 @@ class ProcessText:
                             if child.word == "lúc-from":
                                 # get the time
                                 from_time += "<TIME t1 " + child.children[0].word + ">"
+                            elif child.word == "lúc_nào-from":
+                                from_time += "<TIME t1 <WH t1 TIME>>"
             elif info.word == "đến":
                 # If have children
                 if info.children:
@@ -464,6 +469,8 @@ class ProcessText:
                             if child.word == "lúc-to":
                                 # get the time
                                 to_time += "<TIME t1 " + child.children[0].word + ">"
+                            elif child.word == "lúc_nào-to":
+                                to_time += "<TIME t1 <WH t1 TIME>>"
 
         if agent != "":
             log_form[question_type[0]][grammar_relation.word].setdefault("AGENT", agent)
@@ -475,7 +482,6 @@ class ProcessText:
             log_form[question_type[0]][grammar_relation.word].setdefault("DESTINATION", to_loc)
         if to_time != "":
             log_form[question_type[0]][grammar_relation.word].setdefault("ARRIVE", to_time)
-
 
         file_logical_form = open("../Assignment/Output/output_d.txt", 'a')
         print(log_form, file=file_logical_form)
@@ -527,7 +533,7 @@ class ProcessText:
                             dest_query += "?ap (ATIME ?tr ?ap ?at)"
                         else:
                             encoded_city_name = city_name_encode(dest_info[1].split()[2])
-                            dest_query += "(ATIME ?tr " + encoded_city_name + " ?at) "
+                            dest_query += "(ATIME ?tr " + encoded_city_name + " ?at)"
                     elif key == "LEAVE":
                         # leave_query = ""
                         leave_info = info_dict[key][1:-1].split()
@@ -541,7 +547,7 @@ class ProcessText:
                         # arrive_query = ""
                         arrive_info = info_dict[key][1:-1].split()
                         if "WH" in arrive_info[2]:
-                            arrive_query += "(ATIME ?tr ?ap ?at)"
+                            arrive_query += "?at (ATIME ?tr ?ap ?at)"
                         else:
                             leave_time = arrive_info[2].split()[0] + "HR"
                             arrive_query += "(ATIME ?tr ?ap " + leave_time + ")"
@@ -585,6 +591,7 @@ class ProcessText:
                             dtime_info = split_leave[3]
                     full_source_query = " ".join(
                         x for x in question_mark) + " (DTIME ?tr " + dplace_info + " " + dtime_info
+                    if full_source_query[:-1] != ")": full_source_query+=")"
                     # print(full_source_query)
                     # print(split_source, split_leave)
 
@@ -625,6 +632,7 @@ class ProcessText:
                             atime_info = split_arrive[3]
                     full_leave_query = " ".join(
                         x for x in question_mark) + " (ATIME ?tr " + aplace_info + " " + atime_info
+                    if full_leave_query[:-1] != ")": full_leave_query += ")"
                     # print(full_leave_query)
                     # print(split_arrive, split_dest)
                 if agent_query != "":
@@ -633,7 +641,6 @@ class ProcessText:
                     procedure_str += full_source_query + "\n"
                 if full_leave_query != "":
                     procedure_str += full_leave_query + "\n"
-
 
                 file_procedure_form = open("../Assignment/Output/output_e.txt", 'a')
                 print(procedure_str, file=file_procedure_form)
@@ -676,21 +683,21 @@ class ProcessText:
             gotten_at = []
             result_d = []
             result_a = []
-            dtime_appear =  atime_appear = False
-            dtime_appear_dp = atime_appear_ap = False
+            dtime_appear = atime_appear = False
             # print(commands)
             for item in commands[1:]:
                 if item != "":
                     # print(item.split()[0])
                     if "?" in item.split()[0]:
-                        if item.split()[0] == "?tr":
+                        question_mark = item.split()[0]
+                        if question_mark == "?tr":
                             # Train name
-                            var_to_get.append(item.split()[0])
+                            var_to_get.append(question_mark)
                             for train_item in train_data:
                                 gotten_train.append(train_item.split()[1][:-1])
                         # this query is sure to be second if exist -> only have 1 train name atm
-                        if item.split()[0] == "?dp":
-                            var_to_get.append(item.split()[0])
+                        if question_mark == "?dp":
+                            var_to_get.append(question_mark)
                             for city_code in possible_city_code:
                                 for train_name in gotten_train:
                                     check_cmd = item[4:].replace("?tr", train_name).replace("?dp", city_code).strip()
@@ -705,14 +712,16 @@ class ProcessText:
                                     if have_mark_unused:
                                         # 100% to be ?dt
                                         for time_point in possible_time:
-                                            check_cmd = item[4:].replace("?dt", time_point).replace("?tr", train_name).replace("?dp", city_code).strip()
+                                            check_cmd = item[4:].replace("?dt", time_point).replace("?tr",
+                                                                                                    train_name).replace(
+                                                "?dp", city_code).strip()
                                             if check_cmd in dtime_data:
                                                 result_d.append(city_code)
                                     else:
                                         if check_cmd in dtime_data:
                                             result_d.append(city_code)
-                        if item.split()[0] == "?ap":
-                            var_to_get.append(item.split()[0])
+                        if question_mark == "?ap":
+                            var_to_get.append(question_mark)
                             for city_code in possible_city_code:
                                 for train_name in gotten_train:
                                     check_cmd = item[4:].replace("?tr", train_name).replace("?ap", city_code).strip()
@@ -727,12 +736,64 @@ class ProcessText:
                                     if have_mark_unused:
                                         # 100% to be ?at
                                         for time_point in possible_time:
-                                            check_cmd = item[4:].replace("?at", time_point).replace("?tr", train_name).replace("?ap", city_code).strip()
+                                            check_cmd = item[4:].replace("?at", time_point).replace("?tr",
+                                                                                                    train_name).replace(
+                                                "?ap", city_code).strip()
                                             if check_cmd in atime_data:
                                                 result_a.append(city_code)
                                     else:
                                         if check_cmd in dtime_data:
                                             result_a.append(city_code)
+                        if question_mark == "?at":
+                            var_to_get.append(question_mark)
+                            for time_point in possible_time:
+                                for train_name in gotten_train:
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?at", time_point).strip()
+                                    have_mark_unused = False
+                                    # atime_appear_ap = True
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        # 100% to be ?ap in this case
+                                        if "?ap" == part:
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                break
+                                    if have_mark_unused:
+                                        # 100% to be ?ap
+                                        for city_code in possible_city_code:
+                                            check_cmd = item[4:].replace("?at", time_point).replace("?tr",
+                                                                                                    train_name).replace(
+                                                "?ap", city_code).strip()
+                                            if check_cmd in atime_data:
+                                                result_a.append(time_point)
+                                    else:
+                                        if check_cmd in atime_data:
+                                            result_a.append(time_point)
+                        if question_mark == "?dt":
+                            var_to_get.append(question_mark)
+                            for time_point in possible_time:
+                                for train_name in gotten_train:
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?at", time_point).strip()
+                                    have_mark_unused = False
+                                    # atime_appear_ap = True
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        # 100% to be ?dp in this case
+                                        if "?dp" == part:
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                break
+                                    if have_mark_unused:
+                                        # 100% to be ?ap
+                                        for city_code in possible_city_code:
+                                            check_cmd = item[4:].replace("?dt", time_point).replace("?tr",
+                                                                                                    train_name).replace(
+                                                "?dp", city_code).strip()
+                                            if check_cmd in dtime_data:
+                                                result_d.append(time_point)
+                                    else:
+                                        if check_cmd in dtime_data:
+                                            result_d.append(time_point)
                     else:
                         # Train name is provided
                         if item.split()[1][:-1] in possible_train_name:
@@ -767,9 +828,10 @@ class ProcessText:
                                                     result_d.append(train_name)
                                         elif unused_part == "?dt":
                                             for time_point in possible_time:
-                                                check_cmd = item.replace("?dt", time_point).replace("?tr", train_name).strip()
+                                                check_cmd = item.replace("?dt", time_point).replace("?tr",
+                                                                                                    train_name).strip()
                                                 if check_cmd in dtime_data:
-                                                        result_d.append(train_name)
+                                                    result_d.append(train_name)
                                     else:
                                         if check_cmd in dtime_data:
                                             result_d.append(train_name)
@@ -794,7 +856,8 @@ class ProcessText:
                                                     result_a.append(train_name)
                                         elif unused_part == "?at":
                                             for time_point in possible_time:
-                                                check_cmd = item.replace("?at", time_point).replace("?tr", train_name).strip()
+                                                check_cmd = item.replace("?at", time_point).replace("?tr",
+                                                                                                    train_name).strip()
                                                 # print(check_cmd)
                                                 if check_cmd in atime_data:
                                                     result_a.append(train_name)
@@ -813,7 +876,8 @@ class ProcessText:
                     result = result_d
             elif "?dp" in var_to_get or "?ap" in var_to_get:
                 result = result_d + result_a
-
+            elif "?dt" in var_to_get or "?at" in var_to_get:
+                result = result_d + result_a
         for idx, item in enumerate(result):
             if item in possible_city_code:
                 result[idx] = city_name_decode(item)
@@ -831,7 +895,7 @@ class ProcessText:
 
         file_result = open("../Assignment/Output/output_f.txt", 'a')
         print("Q: " + question, file=file_result)
-        print("A: "+result_str+"\n", file=file_result)
+        print("A: " + result_str + "\n", file=file_result)
         return result_str
 
 
@@ -843,7 +907,6 @@ def process(text):
     query_str = ProcessText.procedure_form(log_form)
     answer = ProcessText.get_query_answer(query_str, text)
     return answer
-
 
 # text = "Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR?"
 # print(process(text))

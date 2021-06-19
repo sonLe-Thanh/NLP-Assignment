@@ -27,4 +27,8 @@ Xe buýt B4 đến đâu?
 Xe buýt B5 đi đến đâu?
 Xe buýt B6 đi đến đâu?
 Xe buýt B1 đi từ đâu đến đâu?
-Xe buýt B3 đến đâu từ đâu ?
+Xe buýt B2 đến đâu từ đâu ?
+Xe buýt B3 đến lúc nào?
+Xe buýt B4 đi từ lúc nào?
+Xe buýt B5 đi từ lúc nào đến lúc nào?
+Xe buýt B5 đi từ lúc nào đến thành phố Hồ Chí Minh?

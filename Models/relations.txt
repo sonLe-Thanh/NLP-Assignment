@@ -27,6 +27,8 @@ nmod thành_phố đà_nẵng
 nmod thành_phố hà_nội
 prep đến lúc
 prep từ lúc
+prep đến lúc_nào
+prep từ lúc_nào
 nmod 0:00 hr
 nmod 1:00 hr
 nmod 2:00 hr

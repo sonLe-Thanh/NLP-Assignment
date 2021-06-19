@@ -16,23 +16,23 @@ PRINT-ALL
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(ATIME ?tr HCMC ?at) 
+(ATIME ?tr HCMC ?at)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(ATIME ?tr HN ?at) 
+(ATIME ?tr HN ?at)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(ATIME ?tr HUE ?at) 
+(ATIME ?tr HUE ?at)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(ATIME ?tr DANANG ?at) 
+(ATIME ?tr DANANG ?at)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
- (ATIME ?tr HCMC 18:30HR)
+ (ATIME ?tr HCMC 18:30HR))
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
@@ -40,7 +40,7 @@ PRINT-ALL
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
- (DTIME ?tr DANANG 5:30HR)
+ (DTIME ?tr DANANG 5:30HR))
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
@@ -48,23 +48,23 @@ PRINT-ALL
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
- (DTIME ?tr DANANG 8:30HR)
- (ATIME ?tr HCMC 18:30HR)
+ (DTIME ?tr DANANG 8:30HR))
+ (ATIME ?tr HCMC 18:30HR))
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
- (DTIME ?tr DANANG 8:30HR)
- (ATIME ?tr HCMC 18:30HR)
+ (DTIME ?tr DANANG 8:30HR))
+ (ATIME ?tr HCMC 18:30HR))
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
 (DTIME ?tr HN ?dt) 
-(ATIME ?tr HUE ?at) 
+(ATIME ?tr HUE ?at)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
 (DTIME ?tr HUE ?dt) 
-(ATIME ?tr HN ?at) 
+(ATIME ?tr HN ?at)
 
 PRINT-ALL
 (TRAIN B1) 
@@ -120,7 +120,25 @@ PRINT-ALL
 ?ap (ATIME ?tr ?ap ?at)
 
 PRINT-ALL
-(TRAIN B3) 
+(TRAIN B2) 
 ?dp (DTIME ?tr ?dp ?dt)
 ?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B3) 
+?at (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B4) 
+?dt (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B5) 
+?dt (DTIME ?tr ?dp ?dt)
+?at (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B5) 
+?dt (DTIME ?tr ?dp ?dt)
+?at (ATIME ?tr HCMC ?at)
 

@@ -56,5 +56,13 @@ nmod(xe_buýt->b6), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), do
 
 nmod(xe_buýt->b1), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đâu), dobj(đến->đâu), pobj(đi->đến), dobj(đến->đâu), punc(đi->?)
 
-nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->đâu), dobj(từ->đâu), pobj(đi->từ), dobj(từ->đâu), punc(đi->?)
+nmod(xe_buýt->b2), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->đâu), dobj(từ->đâu), pobj(đi->từ), dobj(từ->đâu), punc(đi->?)
+
+nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), prep(đến->lúc_nào), punc(đi->?)
+
+nmod(xe_buýt->b4), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), prep(từ->lúc_nào), punc(đi->?)
+
+nmod(xe_buýt->b5), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), prep(từ->lúc_nào), prep(đến->lúc_nào), pobj(đi->đến), prep(đến->lúc_nào), punc(đi->?)
+
+nmod(xe_buýt->b5), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), prep(từ->lúc_nào), prep(đến->lúc_nào), pobj(đi->đến), dobj(đến->hồ_chí_minh), punc(đi->?)
 
