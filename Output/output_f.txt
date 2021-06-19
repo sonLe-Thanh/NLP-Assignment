@@ -23,18 +23,18 @@ Q: Xe buýt nào đến thành phố Đà Nẵng?
 A: Không có kết quả thoả mãn.
 
 Q: Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR?
-A: Không có kết quả thoả mãn.
+A: Kết quả là B4.
 
 Q: Xe buýt nào đến lúc 19:00 HR?
 A: Kết quả là B1.
 
 Q: Xe buýt nào từ Đà Nẵng lúc 5:30 HR?
-A: Không có kết quả thoả mãn.
+A: Kết quả là B5.
 
 Q: Xe buýt nào đi từ lúc 5:30 HR?
 A: Kết quả là B5.
 
-Q: Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR?
+Q: Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR ?
 A: Không có kết quả thoả mãn.
 
 Q: Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR từ Đà Nẵng lúc 8:30 HR ?
@@ -101,7 +101,7 @@ Q: Xe buýt B5 đi từ thành phố Hồ Chí Minh lúc nào?
 A: Không có kết quả thoả mãn.
 
 Q: Xe buýt B5 đi từ thành phố Đà Nẵng lúc nào?
-A: Kết quả là 5:30HR.
+A: Không có kết quả thoả mãn.
 
 Q: Xe buýt B6 đi từ lúc nào đến Huế?
 A: Không có kết quả thoả mãn.
@@ -114,4 +114,37 @@ A: Kết quả là 4:00HR.
 
 Q: Xe buýt B3 đi từ Đà Nẵng đến Huế hết bao lâu?
 A: Kết quả là 4:00HR.
+
+Q: Thời gian xe buýt B3 từ Đà Nẵng đến Huế ?
+A: Kết quả là 4:00HR.
+
+Q: Xe bus nào đến thành phố Huế lúc 20:00 HR ?
+A: Kết quả là B3.
+
+Q: Thời gian xe bus B3 từ Đà Nẵng đến Huế ?
+A: Kết quả là 4:00HR.
+
+Q: Xe bus nào đến thành phố Hồ Chí Minh ?
+A: Kết quả là B4.
+
+Q: Xe bus nào chạy từ hcm ?
+A: Kết quả là B1,B2.
+
+Q: Xe bus nào lăn bánh đến vùng đất thần kinh lúc 20:00 giờ ?
+A: Kết quả là B3.
+
+Q: Chuyến xe nào xuất phát từ thành phố đáng sống đến thủ đô của Việt Nam ?
+A: Kết quả là B5.
+
+Q: Thời gian chuyến xe B1 di chuyển từ HCM đến cố đô Huế ?
+A: Kết quả là 9:00HR.
+
+Q: Xe bus nào lăn bánh từ Đà Nẵng lúc 8 giờ rưỡi ?
+A: Kết quả là B4.
+
+Q: Xe bus nào lăn bánh tới Huế lúc 10 giờ rưỡi tối ?
+A: Kết quả là B2.
+
+Q: Xe bus nào lăn bánh tới Huế lúc 8 giờ tối ?
+A: Kết quả là B3.
 

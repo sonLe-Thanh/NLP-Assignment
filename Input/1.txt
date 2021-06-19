@@ -10,7 +10,7 @@ Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR?
 Xe buýt nào đến lúc 19:00 HR?
 Xe buýt nào từ Đà Nẵng lúc 5:30 HR?
 Xe buýt nào đi từ lúc 5:30 HR?
-Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR?
+Xe buýt nào từ Đà Nẵng lúc 8:30 HR đến thành phố Hồ Chí Minh lúc 18:30 HR ?
 Xe buýt nào đến thành phố Hồ Chí Minh lúc 18:30 HR từ Đà Nẵng lúc 8:30 HR ?
 Xe buýt nào đến Huế từ Hà Nội ?
 Xe buýt nào đến Hà Nội từ Huế ?
@@ -37,3 +37,14 @@ Xe buýt B6 đi từ lúc nào đến Huế?
 Xe buýt B1 đi hết bao lâu?
 Xe buýt B3 đi từ Đà Nẵng hết bao lâu?
 Xe buýt B3 đi từ Đà Nẵng đến Huế hết bao lâu?
+Thời gian xe buýt B3 từ Đà Nẵng đến Huế ?
+Xe bus nào đến thành phố Huế lúc 20:00 HR ?
+Thời gian xe bus B3 từ Đà Nẵng đến Huế ?
+Xe bus nào đến thành phố Hồ Chí Minh ?
+Xe bus nào chạy từ hcm ?
+Xe bus nào lăn bánh đến vùng đất thần kinh lúc 20:00 giờ ?
+Chuyến xe nào xuất phát từ thành phố đáng sống đến thủ đô của Việt Nam ?
+Thời gian chuyến xe B1 di chuyển từ HCM đến cố đô Huế ?
+Xe bus nào lăn bánh từ Đà Nẵng lúc 8 giờ rưỡi ?
+Xe bus nào lăn bánh tới Huế lúc 10 giờ rưỡi tối ?
+Xe bus nào lăn bánh tới Huế lúc 8 giờ tối ?

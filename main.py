@@ -7,6 +7,13 @@ def main():
     input_file_path = "../Assignment/Input/"
     input_file_name = sys.argv[1]
 
+
+    # text = "buýt b1 từ hà nội đến bến nào"
+    # print(text)
+    # newtext = textConvert("chuyến xe buýt b1 từ hà nội đến bến nào")
+    # print(newtext)
+    # # print(text.replace("chuyến xe buýt", "chuyến xe buýt"))
+
     with open(input_file_path+input_file_name, 'r') as input_file:
         questions = input_file.read().splitlines()
 

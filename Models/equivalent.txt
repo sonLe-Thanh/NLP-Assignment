@@ -1,2 +1,8 @@
-xe,buýt,xe buýt,xe bus,chuyến xe,chuyến,chuyến bus,chuyến buýt,buýt
-bắt đầu,rời khỏi,khởi hành,xuất phát,khởi hành
+bắt đầu->từ
+kết thúc,cập,tới->đến
+bến nào,chỗ nào,thành phố nào,nơi nào,nơi đâu,địa điểm nào,vị trí nào->đâu
+chạy,di chuyển,thay đổi vị trí,lăn bánh,rời khỏi,khởi hành,xuất phát->đi
+hànội,hn,hà lội,thủ đô của việt nam,thủ đô của vn,thủ đô vn->hà nội
+sài gòn,hcm,trung tâm miền nam,tphcm,tp.hcm->hồ chí minh
+cố đô,vùng đất thần kinh,cố đô huế->huế
+thành phố đáng sống->đà nẵng

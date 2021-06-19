@@ -22,9 +22,9 @@ nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), do
 
 nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), prep(từ->lúc), tmod(lúc->5:30), nmod(5:30->hr), punc(đi->?)
 
-nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:30), nmod(8:30->hr), pobj(đi->đến), dobj(đến->hồ_chí_minh), prep(đến->lúc), tmod(lúc->18:30), nmod(18:30->hr), punc(đi->?)
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:00), nmod(8:00->hr), pobj(đi->đến), dobj(đến->hồ_chí_minh), prep(đến->lúc), tmod(lúc->18:00), nmod(18:00->hr), punc(đi->?)
 
-nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->hồ_chí_minh), prep(đến->lúc), tmod(lúc->18:30), nmod(18:30->hr), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:30), nmod(8:30->hr), punc(đi->?)
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->hồ_chí_minh), prep(đến->lúc), tmod(lúc->18:00), nmod(18:00->hr), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:00), nmod(8:00->hr), punc(đi->?)
 
 nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->huế), pobj(đi->từ), dobj(từ->hà_nội), punc(đi->?)
 
@@ -75,4 +75,26 @@ nmod(xe_buýt->b1), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->hết), pre
 nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), pobj(đi->hết), prep(hết->bao_lâu), punc(đi->?)
 
 nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), pobj(đi->đến), dobj(đến->huế), pobj(đi->hết), prep(hết->bao_lâu), punc(đi->?)
+
+nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), pobj(đi->đến), dobj(đến->huế), pobj(đi->hết), prep(hết->bao_lâu), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->huế), prep(đến->lúc), tmod(lúc->20:00), nmod(20:00->hr), punc(đi->?)
+
+nmod(xe_buýt->b3), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), pobj(đi->đến), dobj(đến->huế), pobj(đi->hết), prep(hết->bao_lâu), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->hồ_chí_minh), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->hồ_chí_minh), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->huế), prep(đến->lúc), tmod(lúc->20:00), nmod(20:00->hr), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), pobj(đi->đến), dobj(đến->hà_nội), punc(đi->?)
+
+nmod(xe_buýt->b1), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->hồ_chí_minh), pobj(đi->đến), dobj(đến->huế), pobj(đi->hết), prep(hết->bao_lâu), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->từ), dobj(từ->đà_nẵng), prep(từ->lúc), tmod(lúc->8:30), nmod(8:30->hr), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->huế), prep(đến->lúc), tmod(lúc->22:30), nmod(22:30->hr), punc(đi->?)
+
+nmod(xe_buýt->nào), nsubj(đi->xe_buýt), root(root->đi), pobj(đi->đến), dobj(đến->huế), prep(đến->lúc), tmod(lúc->20:00), nmod(20:00->hr), punc(đi->?)
 
