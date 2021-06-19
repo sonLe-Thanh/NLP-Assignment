@@ -36,7 +36,7 @@ PRINT-ALL
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(ATIME ?tr ?p 19:00HR)
+(ATIME ?tr ?ap 19:00HR)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
@@ -44,7 +44,7 @@ PRINT-ALL
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
-(DTIME ?tr ?p 5:30HR)
+(DTIME ?tr ?dp 5:30HR)
 
 PRINT-ALL
 ?tr (TRAIN ?tr) 
@@ -65,4 +65,62 @@ PRINT-ALL
 ?tr (TRAIN ?tr) 
 (DTIME ?tr HUE ?dt) 
 (ATIME ?tr HN ?at) 
+
+PRINT-ALL
+(TRAIN B1) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B2) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B3) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B4) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B5) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B6) 
+?dp (DTIME ?tr ?dp ?dt)
+
+PRINT-ALL
+(TRAIN B1) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B2) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B3) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B4) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B5) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B6) 
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B1) 
+?dp (DTIME ?tr ?dp ?dt)
+?ap (ATIME ?tr ?ap ?at)
+
+PRINT-ALL
+(TRAIN B3) 
+?dp (DTIME ?tr ?dp ?dt)
+?ap (ATIME ?tr ?ap ?at)
 

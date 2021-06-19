@@ -160,6 +160,16 @@ def city_name_encode(city_name):
     elif city_name == "huế":
         return "HUE"
 
+def city_name_decode(city_code):
+    if city_code == "HCMC":
+        return "Hồ Chí Minh"
+    elif city_code == "HN":
+        return "Hà Nội"
+    elif city_code == "DANANG":
+        return "Đà Nẵng"
+    elif city_code == "HUE":
+        return "Huế"
+
 
 class ProcessText:
 
@@ -432,6 +442,8 @@ class ProcessText:
                         if child.type == "N":
                             if child.word in city_set:
                                 from_loc += "<CITY t1<NAME t1 " + child.word + ">>"
+                            elif child.word == "đâu":
+                                from_loc += "<CITY t1<WH t1 NAME>>"
                         # if this child is a preposition -> time
                         if child.type == "P":
                             if child.word == "lúc-from":
@@ -445,6 +457,8 @@ class ProcessText:
                         if child.type == "N":
                             if child.word in city_set:
                                 to_loc += "<CITY t1<NAME t1 " + child.word + ">>"
+                            elif child.word == "đâu":
+                                to_loc += "<CITY t1<WH t1 NAME>>"
                         # if this child is a preposition -> time
                         if child.type == "P":
                             if child.word == "lúc-to":
@@ -500,7 +514,7 @@ class ProcessText:
                         # print(source_info)
                         if "WH" in source_info[1]:
                             # Unknow city name
-                            source_query += "?dp (DTIME ?tr ?p ?dt)"
+                            source_query += "?dp (DTIME ?tr ?dp ?dt)"
                         else:
                             encoded_city_name = city_name_encode(source_info[1].split()[2])
                             source_query += "(DTIME ?tr " + encoded_city_name + " ?dt) "
@@ -510,7 +524,7 @@ class ProcessText:
                         # print(dest_info)
                         if "WH" in dest_info[1]:
                             # Unknow city name
-                            dest_query += "?ap (ATIME ?tr ?p ?at)"
+                            dest_query += "?ap (ATIME ?tr ?ap ?at)"
                         else:
                             encoded_city_name = city_name_encode(dest_info[1].split()[2])
                             dest_query += "(ATIME ?tr " + encoded_city_name + " ?at) "
@@ -518,19 +532,19 @@ class ProcessText:
                         # leave_query = ""
                         leave_info = info_dict[key][1:-1].split()
                         if "WH" in leave_info[2]:
-                            leave_query += "?dt (DTIME ?tr ?p ?dt)"
+                            leave_query += "?dt (DTIME ?tr ?dp ?dt)"
                         else:
                             # print(leave_info[2].split())
                             leave_time = leave_info[2].split()[0] + "HR"
-                            leave_query += "(DTIME ?tr ?p " + leave_time + ")"
+                            leave_query += "(DTIME ?tr ?dp " + leave_time + ")"
                     elif key == "ARRIVE":
                         # arrive_query = ""
                         arrive_info = info_dict[key][1:-1].split()
                         if "WH" in arrive_info[2]:
-                            arrive_query += "(ATIME ?tr ?p ?at)"
+                            arrive_query += "(ATIME ?tr ?ap ?at)"
                         else:
                             leave_time = arrive_info[2].split()[0] + "HR"
-                            arrive_query += "(ATIME ?tr ?p " + leave_time + ")"
+                            arrive_query += "(ATIME ?tr ?ap " + leave_time + ")"
                 # print(agent_query, source_query, dest_query, leave_query, arrive_query)
                 # Combine the query to get a full query
                 full_source_query = full_leave_query = ""
@@ -543,7 +557,7 @@ class ProcessText:
                 else:
                     # Get the ?info data
                     question_mark = []
-                    dplace_info = "?p"
+                    dplace_info = "?dp"
                     dtime_info = "?dt"
                     split_source = source_query.split()
                     split_leave = leave_query.split()
@@ -583,7 +597,7 @@ class ProcessText:
                 else:
                     # Get the ?info data
                     question_mark = []
-                    aplace_info = "?p"
+                    aplace_info = "?ap"
                     atime_info = "?at"
                     split_dest = dest_query.split()
                     split_arrive = arrive_query.split()
@@ -626,7 +640,7 @@ class ProcessText:
                 return procedure_str
 
     @staticmethod
-    def get_query_answer(query):
+    def get_query_answer(query, question):
         # read data
         train_data = []
         atime_data = []
@@ -662,8 +676,8 @@ class ProcessText:
             gotten_at = []
             result_d = []
             result_a = []
-            dtime_appear = False
-            atime_appear = False
+            dtime_appear =  atime_appear = False
+            dtime_appear_dp = atime_appear_ap = False
             # print(commands)
             for item in commands[1:]:
                 if item != "":
@@ -674,11 +688,56 @@ class ProcessText:
                             var_to_get.append(item.split()[0])
                             for train_item in train_data:
                                 gotten_train.append(train_item.split()[1][:-1])
+                        # this query is sure to be second if exist -> only have 1 train name atm
                         if item.split()[0] == "?dp":
-                            # dname
-                            continue
+                            var_to_get.append(item.split()[0])
+                            for city_code in possible_city_code:
+                                for train_name in gotten_train:
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?dp", city_code).strip()
+                                    have_mark_unused = False
+                                    # dtime_appear_dp = True
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        if "?dt" == part:
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                break
+                                    if have_mark_unused:
+                                        # 100% to be ?dt
+                                        for time_point in possible_time:
+                                            check_cmd = item[4:].replace("?dt", time_point).replace("?tr", train_name).replace("?dp", city_code).strip()
+                                            if check_cmd in dtime_data:
+                                                result_d.append(city_code)
+                                    else:
+                                        if check_cmd in dtime_data:
+                                            result_d.append(city_code)
+                        if item.split()[0] == "?ap":
+                            var_to_get.append(item.split()[0])
+                            for city_code in possible_city_code:
+                                for train_name in gotten_train:
+                                    check_cmd = item[4:].replace("?tr", train_name).replace("?ap", city_code).strip()
+                                    have_mark_unused = False
+                                    # atime_appear_ap = True
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        if "?at" == part:
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                break
+                                    if have_mark_unused:
+                                        # 100% to be ?at
+                                        for time_point in possible_time:
+                                            check_cmd = item[4:].replace("?at", time_point).replace("?tr", train_name).replace("?ap", city_code).strip()
+                                            if check_cmd in atime_data:
+                                                result_a.append(city_code)
+                                    else:
+                                        if check_cmd in dtime_data:
+                                            result_a.append(city_code)
                     else:
-                        if gotten_train:
+                        # Train name is provided
+                        if item.split()[1][:-1] in possible_train_name:
+                            gotten_train.append(item.split()[1][:-1])
+                        elif gotten_train:
                             for train_name in gotten_train:
                                 # Replace ?tr in 2 command by train_name
                                 check_cmd = item.replace("?tr", train_name).strip()
@@ -744,12 +803,20 @@ class ProcessText:
                                             result_a.append(train_name)
             # print(result_a)
             # print(result_d)
-            if dtime_appear and atime_appear:
-                result = list(set(result_a) & set(result_d))
-            elif not dtime_appear and atime_appear:
-                result = result_a
-            elif dtime_appear and not atime_appear:
-                result = result_d
+            # Intersection if ?tr is to find
+            if "?tr" in var_to_get:
+                if dtime_appear and atime_appear:
+                    result = list(set(result_a) & set(result_d))
+                elif not dtime_appear and atime_appear:
+                    result = result_a
+                elif dtime_appear and not atime_appear:
+                    result = result_d
+            elif "?dp" in var_to_get or "?ap" in var_to_get:
+                result = result_d + result_a
+
+        for idx, item in enumerate(result):
+            if item in possible_city_code:
+                result[idx] = city_name_decode(item)
             # print(result)
         #         print(item.split())
         # print(train_data)
@@ -763,7 +830,8 @@ class ProcessText:
             result_str += "Không có kết quả thoả mãn"
 
         file_result = open("../Assignment/Output/output_f.txt", 'a')
-        print(result_str, file=file_result)
+        print("Q: " + question, file=file_result)
+        print("A: "+result_str+"\n", file=file_result)
         return result_str
 
 
@@ -773,7 +841,7 @@ def process(text):
     grammar_rel = ProcessText.grammar_relation(word_relation)
     log_form = ProcessText.logical_form(grammar_rel)
     query_str = ProcessText.procedure_form(log_form)
-    answer = ProcessText.get_query_answer(query_str)
+    answer = ProcessText.get_query_answer(query_str, text)
     return answer
 
 

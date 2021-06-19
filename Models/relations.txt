@@ -11,10 +11,12 @@ nsubj đi xe_buýt
 nsubj đi thời_gian
 pobj đi đến
 pobj đi từ
+dobj đến đâu
 dobj đến hồ_chí_minh
 dobj đến huế
 dobj đến đà_nẵng
 dobj đến hà_nội
+dobj từ đâu
 dobj từ hồ_chí_minh
 dobj từ huế
 dobj từ đà_nẵng

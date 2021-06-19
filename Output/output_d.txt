@@ -14,3 +14,17 @@
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <WH t1 NAME>>', 'SOURCE': '<CITY t1<NAME t1 đà_nẵng>>', 'LEAVE': '<TIME t1 8:30>', 'DESTINATION': '<CITY t1<NAME t1 hồ_chí_minh>>', 'ARRIVE': '<TIME t1 18:30>'}}}
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <WH t1 NAME>>', 'SOURCE': '<CITY t1<NAME t1 hà_nội>>', 'DESTINATION': '<CITY t1<NAME t1 huế>>'}}}
 {'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <WH t1 NAME>>', 'SOURCE': '<CITY t1<NAME t1 huế>>', 'DESTINATION': '<CITY t1<NAME t1 hà_nội>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b1">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b2">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b4">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b6">>', 'SOURCE': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b1">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b2">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b4">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b5">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b6">>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b1">>', 'SOURCE': '<CITY t1<WH t1 NAME>>', 'DESTINATION': '<CITY t1<WH t1 NAME>><CITY t1<WH t1 NAME>>'}}}
+{'WH-QUERY': {'đi': {'AGENT': '<TRAIN t1 <NAME t1 "b3">>', 'SOURCE': '<CITY t1<WH t1 NAME>><CITY t1<WH t1 NAME>>', 'DESTINATION': '<CITY t1<WH t1 NAME>>'}}}
