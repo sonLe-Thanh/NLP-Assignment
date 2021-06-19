@@ -1,4 +1,68 @@
 PRINT-ALL
 ?tr (TRAIN ?tr) 
+(DTIME ?tr HN ?dt) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr HUE ?dt) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr DANANG ?dt) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr HCMC ?dt) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(ATIME ?tr HCMC ?at) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(ATIME ?tr HN ?at) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(ATIME ?tr HUE ?at) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(ATIME ?tr DANANG ?at) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+ (ATIME ?tr HCMC 18:30HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(ATIME ?tr ?p 19:00HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+ (DTIME ?tr DANANG 5:30HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr ?p 5:30HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
  (DTIME ?tr DANANG 8:30HR)
  (ATIME ?tr HCMC 18:30HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+ (DTIME ?tr DANANG 8:30HR)
+ (ATIME ?tr HCMC 18:30HR)
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr HN ?dt) 
+(ATIME ?tr HUE ?at) 
+
+PRINT-ALL
+?tr (TRAIN ?tr) 
+(DTIME ?tr HUE ?dt) 
+(ATIME ?tr HN ?at) 
+

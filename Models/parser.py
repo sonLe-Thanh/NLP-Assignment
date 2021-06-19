@@ -618,7 +618,7 @@ class ProcessText:
                 if full_source_query != "":
                     procedure_str += full_source_query + "\n"
                 if full_leave_query != "":
-                    procedure_str += full_leave_query
+                    procedure_str += full_leave_query + "\n"
 
 
                 file_procedure_form = open("../Assignment/Output/output_e.txt", 'a')
@@ -644,10 +644,17 @@ class ProcessText:
                 elif "RUN-TIME" in line:
                     rtime_data.append(line)
         commands = query.split("\n")
+        # Extract bus name, city name, hour from the given data
+        possible_train_name = [item[1:-1].split()[1] for item in train_data]
+        possible_city_code = ['HCMC', 'HN', 'DANANG', 'HUE']
+        possible_atimes = [item[1:-1].split()[3] for item in atime_data]
+        possible_dtimes = [item[1:-1].split()[3] for item in dtime_data]
+        possible_time = list(set(possible_atimes) | set(possible_dtimes))
         # print(commands)
         result = []
         if commands[0] == "PRINT-ALL":
             # start matching
+            var_to_get = []
             gotten_train = []
             gotten_dp = []
             gotten_dt = []
@@ -657,29 +664,84 @@ class ProcessText:
             result_a = []
             dtime_appear = False
             atime_appear = False
+            # print(commands)
             for item in commands[1:]:
-                if "?" in item.split()[0]:
-                    if item.split()[0] == "?tr":
-                        # Train name
-                        for train_item in train_data:
-                            gotten_train.append(train_item.split()[1][:-1])
-                    if item.split()[0] == "?dp":
-                        # dname
-                        continue
-                else:
-                    if gotten_train:
-                        for train_name in gotten_train:
-                            # Replace ?tr in 2 command by train_name
-                            check_cmd = item.replace("?tr", train_name).strip()
-                            # Check dtime condition
-                            if "DTIME" in check_cmd:
-                                dtime_appear = True
-                                if check_cmd in dtime_data:
-                                    result_d.append(train_name)
-                            elif "ATIME" in check_cmd:
-                                atime_appear = True
-                                if check_cmd in atime_data:
-                                    result_a.append(train_name)
+                if item != "":
+                    # print(item.split()[0])
+                    if "?" in item.split()[0]:
+                        if item.split()[0] == "?tr":
+                            # Train name
+                            var_to_get.append(item.split()[0])
+                            for train_item in train_data:
+                                gotten_train.append(train_item.split()[1][:-1])
+                        if item.split()[0] == "?dp":
+                            # dname
+                            continue
+                    else:
+                        if gotten_train:
+                            for train_name in gotten_train:
+                                # Replace ?tr in 2 command by train_name
+                                check_cmd = item.replace("?tr", train_name).strip()
+                                have_mark_unused = False
+                                unused_part = ""
+                                # Check dtime condition
+                                if "DTIME" in check_cmd:
+                                    dtime_appear = True
+                                    # print(check_cmd)
+
+                                    # Check if there is ? in the command
+                                    # Remove the parenthesis
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        if "?" in part:
+                                            # Check if not part is in var_to_get
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                unused_part = part
+                                                break
+                                    if have_mark_unused:
+                                        # Don't care this in the command -> Make it available for all possible values
+                                        if unused_part == "?dp":
+                                            for citi in possible_city_code:
+                                                check_cmd = item.replace("?dp", citi).replace("?tr", train_name).strip()
+                                                if check_cmd in dtime_data:
+                                                    result_d.append(train_name)
+                                        elif unused_part == "?dt":
+                                            for time_point in possible_time:
+                                                check_cmd = item.replace("?dt", time_point).replace("?tr", train_name).strip()
+                                                if check_cmd in dtime_data:
+                                                        result_d.append(train_name)
+                                    else:
+                                        if check_cmd in dtime_data:
+                                            result_d.append(train_name)
+                                elif "ATIME" in check_cmd:
+                                    # print(check_cmd)
+                                    atime_appear = True
+                                    parts_check_cmd = check_cmd[1:-1].split()
+                                    for part in parts_check_cmd:
+                                        if "?" in part:
+                                            # Check if not part is in var_to_get
+                                            if not part in var_to_get:
+                                                have_mark_unused = True
+                                                unused_part = part
+                                                break
+                                    if have_mark_unused:
+                                        # print(unused_part)
+                                        # Don't care this in the command -> Make it available for all possible values
+                                        if unused_part == "?ap":
+                                            for citi in possible_city_code:
+                                                check_cmd = item.replace("?ap", citi).replace("?tr", train_name).strip()
+                                                if check_cmd in atime_data:
+                                                    result_a.append(train_name)
+                                        elif unused_part == "?at":
+                                            for time_point in possible_time:
+                                                check_cmd = item.replace("?at", time_point).replace("?tr", train_name).strip()
+                                                # print(check_cmd)
+                                                if check_cmd in atime_data:
+                                                    result_a.append(train_name)
+                                    else:
+                                        if check_cmd in atime_data:
+                                            result_a.append(train_name)
             # print(result_a)
             # print(result_d)
             if dtime_appear and atime_appear:

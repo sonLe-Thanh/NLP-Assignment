@@ -1,6 +1,84 @@
 S root [
 SUBJ [N xe_buýt [N nào]]
 [MAIN-V đi]
+[P từ [N hà_nội]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [N huế]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [N đà_nẵng]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [N hồ_chí_minh]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N hồ_chí_minh]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N hà_nội]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N huế]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N đà_nẵng]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N hồ_chí_minh, P lúc [N 18:30 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [P lúc [N 19:00 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [N đà_nẵng, P lúc [N 5:30 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P từ [P lúc [N 5:30 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
 [P từ [N đà_nẵng, P lúc [N 8:30 [N hr]]]]
 [P đến [N hồ_chí_minh, P lúc [N 18:30 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N hồ_chí_minh, P lúc [N 18:30 [N hr]]]]
+[P từ [N đà_nẵng, P lúc [N 8:30 [N hr]]]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N huế]]
+[P từ [N hà_nội]]
+]
+S root [
+SUBJ [N xe_buýt [N nào]]
+[MAIN-V đi]
+[P đến [N hà_nội]]
+[P từ [N huế]]
 ]
